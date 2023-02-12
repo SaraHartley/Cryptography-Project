@@ -12,13 +12,17 @@ def decrypt_caesar(ciphertext):
                     if shift > ord('z'):
                         shift -= 26
                     result += chr(shift)
-                else:
+                elif char.isupper():
                     if shift > ord('Z'):
                         shift -= 26
+                    result += chr(shift)
+                else:
+                    if shift > ord('0'):
+                        shift -= 10
                     result += chr(shift)
             else:
                 result += char
         print("Key #{}: {}".format(key, result))
 
-ciphertext = "Pm ol ohk hufaopun jvumpkluaphs av zhf, ol dyval pa pu jpwoly, aoha pz, if zv johunpun aol vykly vm aol slaalyz vm aol hswohila, aoha uva h dvyk jvbsk il thkl vba."
+ciphertext = "Fyyfhp Wtrj fy < gjktwj Eee!"
 decrypt_caesar(ciphertext)
