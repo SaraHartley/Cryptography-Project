@@ -6,6 +6,8 @@ Created on Wed Feb  8 20:46:14 2023
 
 based on https://likegeeks.com/python-caesar-cipher/ and 
 https://www.geeksforgeeks.org/how-to-measure-elapsed-time-in-python/
+    
+        
 """
 import timeit
 from colorama import Back,Style
@@ -43,7 +45,8 @@ def main(plaintext, shift):
     
     min_m_secs = -1
     ciphertext = ""
-    for i in range(1000):
+    #TODO change back to 1000
+    for i in range(1):
         
         #start timer
         start = timeit.default_timer()
@@ -78,7 +81,7 @@ def Encrypt_Caesar(plaintext, shift):
         #Convert uppercase letters
         if letter.isupper():            
             #get shifted letter
-            cipherletter = apply_shift(letter, shift, 'A')
+            cipherletter = apply_shift(letter, shift, 'A',26)
             
             #Add converted to letter to ciphertext
             ciphertext += cipherletter
@@ -86,7 +89,7 @@ def Encrypt_Caesar(plaintext, shift):
         #Convert lowercase letters
         elif letter.islower():
             #get shifted letter
-            cipherletter = apply_shift(letter, shift, 'a')
+            cipherletter = apply_shift(letter, shift, 'a',26)
             
             #Add converted to letter to ciphertext
             ciphertext += cipherletter
@@ -94,9 +97,45 @@ def Encrypt_Caesar(plaintext, shift):
         #Convert digits
         elif letter.isdigit():
             #get shifted letter
-            cipherletter = apply_shift(letter, shift, '0')
+            cipherletter = apply_shift(letter, shift, '0',10)
             
             #Add converted to letter to ciphertext
+            ciphertext += cipherletter
+            
+        #Ascii !(33) - /(47)
+        elif ((ord(letter)) > 32) and ((ord(letter))<48):
+           print("Ascii 1: "+letter + str(ord(letter)))
+           #get shifted leter
+           cipherletter = apply_shift(letter, shift, '!', 15)
+           
+           #add converted letter to ciphertext
+           ciphertext += cipherletter
+           
+        #Ascii @(64) - :(58)
+        elif ((ord(letter))>57) and ((ord(letter))<65):
+            print("Ascii 2: "+letter + str(ord(letter)))
+            #get shifted leter
+            cipherletter = apply_shift(letter, shift, ':', 7)
+                
+            #add converted letter to ciphertext
+            ciphertext += cipherletter
+            
+        #Ascii [(91) - `(96)
+        elif ((ord(letter))>90) and ((ord(letter))<97):
+            print("Ascii 3: "+letter + str(ord(letter)))
+            #get shifted leter
+            cipherletter = apply_shift(letter, shift, '[', 6)
+                
+            #add converted letter to ciphertext
+            ciphertext += cipherletter
+        
+        #Ascii {(123) - ~(126)
+        elif ((ord(letter))>122) and ((ord(letter))<127):
+            print("Ascii 4: "+letter + str(ord(letter)))
+            #get shifted leter
+            cipherletter = apply_shift(letter, shift, '{', 4)
+                
+            #add converted letter to ciphertext
             ciphertext += cipherletter
             
         else:
@@ -104,12 +143,12 @@ def Encrypt_Caesar(plaintext, shift):
     
     return ciphertext
 
-def apply_shift(letter, shift, test_letter):
+def apply_shift(letter, shift, test_letter,mod_num):
     #get index
     letter_index = ord(letter) - ord(test_letter)
     
     #shift index
-    shifted_index = (letter_index + shift) % 26
+    shifted_index = (letter_index + shift) % mod_num
     shifted_index = shifted_index + ord(test_letter)
     
     #convert index to letter
@@ -120,6 +159,7 @@ def apply_shift(letter, shift, test_letter):
     
 
 if __name__ == "__main__":
+    '''
     print(Back.CYAN,"Plaintext: test")
     print(Style.RESET_ALL)
     print("Shift: 0")
@@ -138,18 +178,20 @@ if __name__ == "__main__":
     print("Shift: -4")
     print("Ciphertext: ",main("We are Encrypting!", -4))
     print()
+    '''
     
-    print(Back.CYAN,"Plaintext: We are w0rking hard!")
+    print(Back.CYAN,"Plaintext: We are w0rking hard!={~")
     print(Style.RESET_ALL)
     print("Shift: -3")
-    print("Ciphertext: ",main("We are w0rking hard!", -3))
+    print("Ciphertext: ",main("We are w0rking hard!={~", -3))
     print()
     
-    print(Back.CYAN,"Plaintext: What are we d0ing right now?!")
+    print(Back.CYAN,"Plaintext: What are we d0ing right now?!^[`")
     print(Style.RESET_ALL)
-    print("Shift: 7")
-    print("Ciphertext: ",main("What are we d0ing right now?!", 7))
+    print("Shift: 8")
+    print("Ciphertext: ",main("What are we d0ing right now?!^[`", 8))
     print()
+    '''
     
     print(Back.CYAN,"Plaintext: The big brown fox jumps over the lazy dog!")
     print(Style.RESET_ALL)
@@ -180,7 +222,7 @@ if __name__ == "__main__":
     print("Shift: 12")
     print("Ciphertext: ",main("If he had anything confidential to say, he wrote it in cipher, that is, by so changing the order of the letters of the alphabet, that not a word could be made out.", 12))
     
-    
+    '''
     
     
     
