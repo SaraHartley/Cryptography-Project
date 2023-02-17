@@ -1,0 +1,10 @@
+1) test
+2) Testing Parameters
+3) We are Encrypting!
+4) We are w0rking hard!
+5) What are we d0ing right now?!
+6) The big brown fox jumps over the lazy dog!
+7) Humpy dumpty s@t 0n the w@ll, humpty dumpty haD a great f@ll
+8) This is our project for Software Engineering with Crypt0raphy!?
+9) zyxwvutsrqponmlkjihgfedcba
+10) If he had anything confidential to say, he wrote it in cipher, that is, by so changing the order of the letters of the alphabet, that not a word could be made out.
