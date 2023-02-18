@@ -10,7 +10,7 @@ https://theasciicode.com.ar/
     
         
 """
-import timeit
+import time
 from colorama import Back,Style
 
 
@@ -46,16 +46,16 @@ def main(plaintext, shift):
     
     min_m_secs = -1
     ciphertext = ""
-    for i in range(1000):
+    for i in range(5):
         
         #start timer
-        start = timeit.default_timer()
+        start = time.monotonic()
     
         #run code
         ciphertext = Encrypt_Caesar(plaintext, shift)
     
         #stop timer
-        stop = timeit.default_timer()
+        stop = time.monotonic()
         execution_time = stop - start
         
         # printing execution time of code in microseconds
@@ -164,7 +164,6 @@ if __name__ == "__main__":
     print(Style.RESET_ALL)
     print("Shift: 0")
     print("Ciphertext: ",main("test", 0))
-    #print(ciphertext_result)
     print()
     
     print(Back.CYAN,"Plaintext: Testing Parameters")
