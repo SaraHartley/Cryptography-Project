@@ -101,7 +101,7 @@ def Encrypt_Caesar(plaintext, shift):
             
             #Add converted to letter to ciphertext
             ciphertext += cipherletter
-            
+#TODO change to check directly
         #Ascii !(33) - /(47)
         elif ((ord(letter)) > 32) and ((ord(letter))<48):
            #print("Ascii 1: "+letter + str(ord(letter)))
