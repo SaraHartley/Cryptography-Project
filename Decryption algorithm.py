@@ -1,32 +1,60 @@
-"""
-Decryption algorithm for caesar cipher, this is a brute force approach that tests every key from 1-25. You then manually inspect the answers to provide the one which makes the most sense.
-"""
 def decrypt_caesar(cipher_text):
-    for key in range(26):
-        candidate_plain_text = ""
+    decrypted = ''
+    for shift in range(1, 26):
+        candidate_text = ''
         for char in cipher_text:
             if char.isalpha():
-                shifted_char = ord(char) - key
+                shifted_char = ord(char) - shift
                 if char.isupper():
                     if shifted_char < ord('A'):
                         shifted_char += 26
                 else:
                     if shifted_char < ord('a'):
                         shifted_char += 26
-                candidate_plain_text += chr(shifted_char)
+                candidate_text += chr(shifted_char)
             elif char.isdigit():
-                shifted_digit = ord(char) - key
-                if shifted_digit < ord('0'):
-                    shifted_digit += 10
-                candidate_plain_text += chr(shifted_digit)
+                # Shift digits separately from letters
+                shifted_digit = (int(char) - shift) % 10
+                if shifted_digit == 0:
+                    shifted_digit = 10
+                candidate_text += str(shifted_digit)
+            elif '!' <= char <= '/':
+                # Only decrypt ASCII symbols between '!' and '@'
+
+                shifted_char = ord(char) - shift
+                if shifted_char < ord('!'):
+                    shifted_char += 15  # Wrap around to the end of the range
+                candidate_text += chr(shifted_char)
+            elif ':' <= char <= '@':
+                # Only decrypt ASCII symbols between '!' and '@'
+
+                shifted_char = ord(char) - shift
+                if shifted_char < ord(':'):
+                    shifted_char += 7  # Wrap around to the end of the range
+                candidate_text += chr(shifted_char)
+            elif '[' <= char <= '`':
+                # Only decrypt ASCII symbols between '!' and '@'
+
+                shifted_char = ord(char) - shift
+                if shifted_char < ord('['):
+                    shifted_char += 6  # Wrap around to the end of the range
+                candidate_text += chr(shifted_char)
+            elif '{' <= char <= '~':
+                # Only decrypt ASCII symbols between '!' and '@'
+
+                shifted_char = ord(char) - shift
+                if shifted_char < ord('{'):
+                    shifted_char += 4  # Wrap around to the end of the range
+                candidate_text += chr(shifted_char)
             else:
-                candidate_plain_text += char
-        print(f"Key = {key:2} | Plain text = {candidate_plain_text}")
+                candidate_text += char
+        print(f"key= {shift}, Plain text = {candidate_text}")
+        # Check if the candidate text looks like a valid message
+        if 'the' in candidate_text.lower():
+            decrypted = candidate_text
+            break
 
-        # Wrap around the key if it exceeds the range of possible keys
-        if key >= 25:
-            key -= 26
-
-
-ciphertext = "Pm ol ohk hufaopun jvumpkluaphs av zhf, ol dyval pa pu jpwoly, aoha pz, if zv johunpun aol vykly vm aol slaalyz vm aol hswohila, aoha uva h dvyk jvbsk il thkl vba."
+    return decrypted
+# shoulddddd     be \ `
+ciphertext = "cvvcem cv  ^ |"
 decrypt_caesar(ciphertext)

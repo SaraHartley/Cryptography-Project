@@ -23,14 +23,28 @@ def decrypt_caesar(cipher_text):
 
                 shifted_char = ord(char) - shift
                 if shifted_char < ord('!'):
-                    shifted_char += 33  # Wrap around to the end of the range
+                    shifted_char += 15  # Wrap around to the end of the range
                 candidate_text += chr(shifted_char)
             elif ':' <= char <= '@':
                 # Only decrypt ASCII symbols between '!' and '@'
 
                 shifted_char = ord(char) - shift
                 if shifted_char < ord(':'):
-                    shifted_char += 58  # Wrap around to the end of the range
+                    shifted_char += 7  # Wrap around to the end of the range
+                candidate_text += chr(shifted_char)
+            elif '[' <= char <= '`':
+                # Only decrypt ASCII symbols between '!' and '@'
+
+                shifted_char = ord(char) - shift
+                if shifted_char < ord('['):
+                    shifted_char += 6  # Wrap around to the end of the range
+                candidate_text += chr(shifted_char)
+            elif '{' <= char <= '~':
+                # Only decrypt ASCII symbols between '!' and '@'
+
+                shifted_char = ord(char) - shift
+                if shifted_char < ord('{'):
+                    shifted_char += 4  # Wrap around to the end of the range
                 candidate_text += chr(shifted_char)
             else:
                 candidate_text += char
@@ -41,5 +55,6 @@ def decrypt_caesar(cipher_text):
             break
 
     return decrypted
-ciphertext = "cvvcem cv "
+# shoulddddd     be \ `
+ciphertext = "cvvcem cv  ^ |"
 decrypt_caesar(ciphertext)
