@@ -46,6 +46,7 @@ def main(plaintext, shift):
     
     min_m_secs = -1
     ciphertext = ""
+    times = []
     for i in range(5):
         
         #start timer
@@ -61,10 +62,14 @@ def main(plaintext, shift):
         # printing execution time of code in microseconds
         m_secs = round(execution_time * 10 ** 6, 2)
         
+        times.append(m_secs)
+        
         if (min_m_secs < 0 or m_secs < min_m_secs):
             min_m_secs = m_secs
                 
-    print(f"Time Taken: {min_m_secs}µs")
+    print(f"Minimum Time Taken: {min_m_secs}µs")
+    average_m_secs = sum(times)/len(times)
+    print(f"Average Time Taken: {average_m_secs}µs")
     
     return ciphertext
     
