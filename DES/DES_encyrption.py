@@ -9,17 +9,27 @@ https://pycryptodome.readthedocs.io/en/latest/src/cipher/des.html
 @author: Sarah
 """
 from Crypto.Cipher import DES
-from Crypto.Util import Padding
+from Crypto.Util.Padding import pad
 
 
 def main(message):
-    print(message)
-    key = b'-8B key-'
+    #define key
+    key = b'secret_k'
+    print(key)
+    #define plaintext
+    plaintext = str.encode(message)
+    print(plaintext)
+    #create cipher
     cipher = DES.new(key,DES.MODE_ECB)
-    plaintext = Padding.pad(message,8)
-    ciphertext = cipher.encrypt(plaintext)
-    return ciphertext
+
+    #pad 
+    padded_plaintext = pad(plaintext,DES.block_size)
+
+    #encrypt plaintext
+    ciphertext = cipher.encrypt(padded_plaintext)
+
+    print(ciphertext)
 
 if __name__ == "__main__":
-    print(main("This is a message to encrypt at 4 pm!"))
+    main('This is a message to encrypt at 4 pm!')
 
