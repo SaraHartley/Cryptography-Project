@@ -14,7 +14,7 @@ def brute_force_decrypt(ciphertext):
         plaintext = cipher.decrypt(ciphertext)
 
         # Check if the decrypted plaintext contains the word "flag"
-        if b'flag' in plaintext:
+        if b'message' in plaintext:
             # If the plaintext contains "flag", return the key and plaintext
             return key, plaintext
 
@@ -22,7 +22,7 @@ def brute_force_decrypt(ciphertext):
     return None
 
 # Define a ciphertext to decrypt
-ciphertext = b'\xfe\xf9\x8dW\x8c3\x1e\xfa@\x87\xb6\xf4\xe6\xee\xcf'
+ciphertext = b'\x1e=Z\xa4\xae\t\x04\x02x\x17\nl\xcb\xd7tVVaZ\xfeV\x1e,\xa0\xc4de>\x19~e\x98\xa8\x9ekS\xf2\xbeBE'
 
 # Call the brute force decryption function on the ciphertext
 result = brute_force_decrypt(ciphertext)

@@ -8,7 +8,7 @@ def decrypt(key, ciphertext):
     return plaintext # Returning the decrypted and unpadded plaintext
 
 key = b'secret_k' # Defining the key used to encrypt the ciphertext as a byte string
-ciphertext = b'\xfe\xf9\x8dW\x8c3\x1e\xfa@\x87\xb6\xf4\xe6\xee\xcf' # Defining the ciphertext to be decrypted as a byte string
+ciphertext = b'\x1e=Z\xa4\xae\t\x04\x02x\x17\nl\xcb\xd7tVVaZ\xfeV\x1e,\xa0\xc4de>\x19~e\x98\xa8\x9ekS\xf2\xbeBE' # Defining the ciphertext to be decrypted as a byte string
 plaintext = decrypt(key, ciphertext) # Decrypting the ciphertext using the specified key and storing the result in the plaintext variable
 
 print(plaintext) # Printing the decrypted plaintext to the console
