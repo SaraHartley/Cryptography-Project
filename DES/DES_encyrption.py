@@ -10,9 +10,43 @@ https://pycryptodome.readthedocs.io/en/latest/src/cipher/des.html
 """
 from Crypto.Cipher import DES
 from Crypto.Util.Padding import pad
+import time
+from colorama import Back,Style
 
+def main(plaintext):
+    print(Back.CYAN,"Plaintext: " ,plaintext)
+    print(Style.RESET_ALL)
+    
+    min_m_secs = -1
+    ciphertext = ""
+    times = []
+    for i in range(5):
+        
+        #start timer
+        start = time.monotonic()
+    
+        #run code
+        ciphertext = encrypt_des(plaintext)
+    
+        #stop timer
+        stop = time.monotonic()
+        execution_time = stop - start
+        
+        # printing execution time of code in microseconds
+        m_secs = round(execution_time * 10 ** 6, 2)
+        
+        times.append(m_secs)
+        
+        if (min_m_secs < 0 or m_secs < min_m_secs):
+            min_m_secs = m_secs
+                
+    print(f"Minimum Time Taken: {min_m_secs}µs")
+    average_m_secs = sum(times)/len(times)
+    print(f"Average Time Taken: {average_m_secs}µs")
+    print("Ciphertext: ", ciphertext)
+    print()
 
-def main(message):
+def encrypt_des(message):
     #define key
     key = b'secret_k'
     print(key)

@@ -1,4 +1,5 @@
 from Crypto.Cipher import DES
+#started 4:41 pm Sat 3/12/2023
 
 # Define a function to brute force a DES encrypted ciphertext
 def brute_force_decrypt(ciphertext):
