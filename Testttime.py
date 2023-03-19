@@ -38,7 +38,7 @@ def decrypt_caesar(cipher_text):
     return candidate_plain_text
 
 # Test the speed of my_function by calling it 5 times with your input
-min_time, avg_time = time_func(decrypt_caesar, "Pm ol ohk hufaopun jvumpkluaphs av zhf, ol dyval pa pu jpwoly, aoha pz, if zv johunpun aol vykly vm aol slaalyz vm aol hswohila, aoha uva h dvyk jvbsk il thkl vba.")
+min_time, avg_time = time_func(decrypt_caesar, "Once upon a time, in a world ruled by technology, there was a brilliant programmer named Max who had a knack for solving complex problems. Max's reputation had spread far and wide, and he had become known as the '@Mastermind!' because of his ability to create incredible software solutions. One day,Max received a message from an unknown sender. The message contained a series of numbers and special characters that seemed to be a code. Max was intrigued and decided to crack the code. After over 40 weeks of working 80 hours on the code, Max discovered that the message was from a mysterious organization that was looking for someone with his skills. They wanted him to create a program that would change the world forever. Max was excited by the challenge and accepted the organization's offer. He worked tirelessly on the program, putting in many sleepless nights to make sure it was perfect. Finally, the day arrived when Max completed the program and presented it to the organization. They were amazed by Max's work and declared him a genius. From that day on, Max became known as the 'Mastermind of the Tech World,' and his legacy lived on for generations to come.")
 
 # Print the minimum time taken, the average time per call, and the total time taken
 print(f"Minimum time taken: {min_time:.6f} seconds")
