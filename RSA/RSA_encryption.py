@@ -42,7 +42,7 @@ def test_function_speed(func,func2, *args, **kwargs):
     print("Total time (per 5 calls): {:.6f} seconds".format(sum(times)))
     print()
     
-    print("")
+    print("Decryption")
     print("Minimum time taken: {:.6f} seconds".format(min(times_decrypt)))
     print("Average time per call: {:.6f} seconds".format(sum(times_decrypt) / len(times_decrypt)))
     print("Total time (per 5 calls): {:.6f} seconds".format(sum(times_decrypt)))
