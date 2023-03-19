@@ -24,12 +24,15 @@ def test_function_speed(func,func2, *args, **kwargs):
     times_decrypt = []
     for i in range(5):
         start_time = time.perf_counter()
-        func(*args, **kwargs)
+        ciphertext =func(*args, **kwargs)
         end_time = time.perf_counter()
         times.append(end_time - start_time)
+        print(ciphertext)
+        
+        #test_function_speed(decrypt_rsa,ciphertext)
         
         start_time_decrypt = time.perf_counter()
-        func2(*args, **kwargs)
+        func2(ciphertext, **kwargs)
         end_time_decrypt = time.perf_counter()
         times_decrypt.append(end_time_decrypt - start_time_decrypt)
 
@@ -39,7 +42,7 @@ def test_function_speed(func,func2, *args, **kwargs):
     print("Total time (per 5 calls): {:.6f} seconds".format(sum(times)))
     print()
     
-    print("Decryption:")
+    print("")
     print("Minimum time taken: {:.6f} seconds".format(min(times_decrypt)))
     print("Average time per call: {:.6f} seconds".format(sum(times_decrypt) / len(times_decrypt)))
     print("Total time (per 5 calls): {:.6f} seconds".format(sum(times_decrypt)))
@@ -74,8 +77,8 @@ def encrypt_rsa(message):
     
     #encrypt
     ciphertext = cipher_rsa.encrypt(data)
-    print(ciphertext)
-    print()
+    #print(ciphertext)
+    return ciphertext
 
 def decrypt_rsa(ciphertext):
     # Load the private key from a file
@@ -87,12 +90,14 @@ def decrypt_rsa(ciphertext):
     
     # Encrypted message to be decrypted
     encrypted_message = ciphertext
+    print("encrypted message: ",encrypted_message)
     
     # Decrypt the message
     decrypted_message = cipher_rsa.decrypt(encrypted_message)
     
     # Print the decrypted message
     print(decrypted_message)
+    #return decrypted_message
 
 if __name__ == "__main__":
     test_function_speed(encrypt_rsa,decrypt_rsa,"Once upon a time, in a world ruled by technology, there was a brilliant programmer named Max who had a knack for solving complex problems. Max's reputation had spread far and wide, and he had become known as \"@\".")    
