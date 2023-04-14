@@ -54,6 +54,8 @@ def encrypt_ECC(msg, pubKey):
     ciphertextPubKey = ciphertextPrivKey * curve.g
     return (ciphertext, nonce, authTag, ciphertextPubKey)
 
+
+
 def start_encrypt_ECC(msg):
     #msg = b'Text to be encrypted by ECC public key and ' \
     #      b'decrypted by its corresponding ECC private key'
@@ -70,6 +72,12 @@ def start_encrypt_ECC(msg):
     }
     print("encrypted msg:", encryptedMsgObj)
 
+def decrypt_ECC(encryptedMsg, privKey):
+    (ciphertext, nonce, authTag, ciphertextPubKey) = encryptedMsg
+    sharedECCKey = privKey * ciphertextPubKey
+    secretKey = ecc_point_to_256_bit_key(sharedECCKey)
+    plaintext = start_encrypt_ECC(ciphertext, nonce, authTag, secretKey)
+    return plaintext
 
 #---------------------------------------------------------------------------
 
