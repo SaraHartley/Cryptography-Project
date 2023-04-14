@@ -10,7 +10,7 @@ from Crypto.Cipher import AES
 import hashlib, secrets, binascii
 import time
 
-
+#Step 0 Begin Timing
 def test_function_speed(func, *args, **kwargs):
     """Test the speed of a function by running it five times and printing the minimum time taken,
     average time per call, and total time (per 5 calls).
@@ -33,12 +33,13 @@ def test_function_speed(func, *args, **kwargs):
     print()
     print()
 
+#Step 4 Encrypt message and return ciphertext
 def encrypt_AES_GCM(msg, secretKey):
     aesCipher = AES.new(secretKey, AES.MODE_GCM)
     ciphertext, authTag = aesCipher.encrypt_and_digest(msg)
     return (ciphertext, aesCipher.nonce, authTag)
 
-
+#Step 3 create SHA secret key
 def ecc_point_to_256_bit_key(point):
     sha = hashlib.sha256(int.to_bytes(point.x, 32, 'big'))
     sha.update(int.to_bytes(point.y, 32, 'big'))
@@ -46,16 +47,18 @@ def ecc_point_to_256_bit_key(point):
 
 curve = registry.get_curve('brainpoolP256r1')
 
+#Step 2 Create private and Shared key and call for encryption
 def encrypt_ECC(msg, pubKey):
     ciphertextPrivKey = secrets.randbelow(curve.field.n)
     sharedECCKey = ciphertextPrivKey * pubKey
+    
     secretKey = ecc_point_to_256_bit_key(sharedECCKey)
     ciphertext, nonce, authTag = encrypt_AES_GCM(msg, secretKey)
     ciphertextPubKey = ciphertextPrivKey * curve.g
     return (ciphertext, nonce, authTag, ciphertextPubKey)
 
 
-
+#Step 1 Create keys and call encryption
 def start_encrypt_ECC(msg):
     #msg = b'Text to be encrypted by ECC public key and ' \
     #      b'decrypted by its corresponding ECC private key'
@@ -64,6 +67,8 @@ def start_encrypt_ECC(msg):
     pubKey = privKey * curve.g
     
     encryptedMsg = encrypt_ECC(msg, pubKey)
+    
+    #create dict object out of encryption message
     encryptedMsgObj = {
         'ciphertext': binascii.hexlify(encryptedMsg[0]),
         'nonce': binascii.hexlify(encryptedMsg[1]),
@@ -72,6 +77,7 @@ def start_encrypt_ECC(msg):
     }
     print("encrypted msg:", encryptedMsgObj)
 
+#Decryption
 def decrypt_ECC(encryptedMsg, privKey):
     (ciphertext, nonce, authTag, ciphertextPubKey) = encryptedMsg
     sharedECCKey = privKey * ciphertextPubKey
