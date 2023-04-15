@@ -58,7 +58,7 @@ def encrypt_ECC(msg, pubKey):
     return (ciphertext, nonce, authTag, ciphertextPubKey)
 
 
-#Step 1 Create keys and call encryption
+#Step 1 Create public and private keys and call encryption
 def start_encrypt_ECC(msg):
     #msg = b'Text to be encrypted by ECC public key and ' \
     #      b'decrypted by its corresponding ECC private key'
