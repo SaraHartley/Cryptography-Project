@@ -34,42 +34,42 @@ def ecc_point_to_256_bit_key(point):
 
 def encrypt_decrypt_ECC(msg):
     # Generate ECC key pair
-    privKey = secrets.randbelow(curve.field.n)
-    pubKey = privKey * curve.g
+    privKey = secrets.randbelow(curve.field.n)   # Generate a random integer for private key
+    pubKey = privKey * curve.g   # Calculate the public key by multiplying the generator point with the private key
 
     # Encrypt message using ECC key pair
     def encrypt_AES_GCM(msg, secretKey):
-        aesCipher = AES.new(secretKey, AES.MODE_GCM)
-        ciphertext, authTag = aesCipher.encrypt_and_digest(msg)
-        return (ciphertext, aesCipher.nonce, authTag)
+        aesCipher = AES.new(secretKey, AES.MODE_GCM)   # Create an AES cipher in GCM mode with a secret key
+        ciphertext, authTag = aesCipher.encrypt_and_digest(msg)   # Encrypt and compute the authentication tag
+        return (ciphertext, aesCipher.nonce, authTag)   # Return the ciphertext, nonce, and authentication tag
 
     def encrypt_ECC(msg, pubKey):
-        ciphertextPrivKey = secrets.randbelow(curve.field.n)
-        sharedECCKey = ciphertextPrivKey * pubKey
-        secretKey = ecc_point_to_256_bit_key(sharedECCKey)
-        ciphertext, nonce, authTag = encrypt_AES_GCM(msg, secretKey)
-        ciphertextPubKey = ciphertextPrivKey * curve.g
-        return (ciphertext, nonce, authTag, ciphertextPubKey)
+        ciphertextPrivKey = secrets.randbelow(curve.field.n)   # Generate a random integer for the ciphertext private key
+        sharedECCKey = ciphertextPrivKey * pubKey   # Calculate the shared key by multiplying the public key with the ciphertext private key
+        secretKey = ecc_point_to_256_bit_key(sharedECCKey)   # Convert the shared key to a 256-bit AES key
+        ciphertext, nonce, authTag = encrypt_AES_GCM(msg, secretKey)   # Encrypt the message using the AES cipher and get the nonce and authentication tag
+        ciphertextPubKey = ciphertextPrivKey * curve.g   # Calculate the ciphertext public key by multiplying the generator point with the ciphertext private key
+        return (ciphertext, nonce, authTag, ciphertextPubKey)   # Return the ciphertext, nonce, authentication tag, and ciphertext public key
 
-    encryptedMsg = encrypt_ECC(msg, pubKey)
+    encryptedMsg = encrypt_ECC(msg, pubKey)   # Encrypt the message using ECC and get the ciphertext, nonce, authentication tag, and ciphertext public key
 
     # Decrypt message using ECC private key
     def decrypt_ECC(encryptedMsg, privKey):
-        (ciphertext, nonce, authTag, ciphertextPubKey) = encryptedMsg
-        sharedECCKey = privKey * ciphertextPubKey
-        secretKey = ecc_point_to_256_bit_key(sharedECCKey)
-        aesCipher = AES.new(secretKey, AES.MODE_GCM, nonce)
-        plaintext = aesCipher.decrypt_and_verify(ciphertext, authTag)
-        return plaintext
+        (ciphertext, nonce, authTag, ciphertextPubKey) = encryptedMsg   # Extract the ciphertext, nonce, authentication tag, and ciphertext public key from the input
+        sharedECCKey = privKey * ciphertextPubKey   # Calculate the shared key by multiplying the ciphertext public key with the private key
+        secretKey = ecc_point_to_256_bit_key(sharedECCKey)   # Convert the shared key to a 256-bit AES key
+        aesCipher = AES.new(secretKey, AES.MODE_GCM, nonce)   # Create an AES cipher in GCM mode with the secret key and nonce
+        plaintext = aesCipher.decrypt_and_verify(ciphertext, authTag)   # Decrypt the ciphertext and verify the authentication tag
+        return plaintext   # Return the decrypted plaintext
 
-    decryptedMsg = decrypt_ECC(encryptedMsg, privKey)
+    decryptedMsg = decrypt_ECC(encryptedMsg, privKey)   # Decrypt the ciphertext using ECC and the private key
 
     # Return the encrypted and decrypted messages
     encryptedMsgObj = {
-        'ciphertext': binascii.hexlify(encryptedMsg[0]),
-        'nonce': binascii.hexlify(encryptedMsg[1]),
-        'authTag': binascii.hexlify(encryptedMsg[2]),
-        'ciphertextPubKey': hex(encryptedMsg[3].x) + hex(encryptedMsg[3].y % 2)[2:]
+        'ciphertext': binascii.hexlify(encryptedMsg[0]),   # Convert the ciphertext to a hexadecimal string
+        'nonce': binascii.hexlify(encryptedMsg[1]),   # Convert the nonce to a hexadecimal string
+        'authTag': binascii.hexlify(encryptedMsg[2]),   # Convert the authentication tag to a hexadecimal string
+        'ciphertextPubKey': hex(encryptedMsg[3].x) + hex(encryptedMsg[3].y % 2)[2:]   # Convert the ciphertext public key to a hexadecimal string
     }
     return (encryptedMsgObj, decryptedMsg)
 
