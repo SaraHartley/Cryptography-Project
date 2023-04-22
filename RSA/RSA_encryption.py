@@ -80,7 +80,7 @@ def encrypt_rsa(message):
     #print(ciphertext)
     return ciphertext
 
-
+def decrypt_rsa(ciphertext):
     # Load the private key from a file
     with open('private.pem', 'rb') as f:
         private_key = RSA.import_key(f.read())
